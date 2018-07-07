@@ -5,10 +5,14 @@ class Img(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(150))
     user = db.Column(db.String(50))
+    source = db.Column(db.String(100))
+    source_link = db.Column(db.Text)
 
-    def __init__(self, name, user):
+    def __init__(self, name, user, source, source_link):
         self.name = name
         self.user = user
+        self.source = source
+        self.source_link = source_link
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

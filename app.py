@@ -25,7 +25,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/')
 def web():
 	data = None
-	# data = get_data()
+	data = get_data()
 	return render_template('index.html', data=data)
 
 @app.route('/add_comment/', methods=['POST'])
@@ -38,9 +38,10 @@ def info():
 	return render_template('post.html')
 
 @cross_origin()
-@app.route('/add_image/<name>/<user>/')
+@app.route('/add_image/<name>/<user>/<source>/<source_link>/')
 def add_img():
-	if record_img(name, user):
+	source_link = "https://"+source_link
+	if record_img(name, user, source, source_link):
 		return "SUCCESS!"
 
 
@@ -50,7 +51,8 @@ def retrieve_imgs():
 	imgs = []
 	q = models.Img.query.all()
 	for i, line in enumerate(q):
-		imgs.append({"id":line.id, "name":line.name})
+		imgs.append({"id":line.id, "name":line.name, 
+					 "source": line.source, "source_link": line.source_link})
 	return imgs
 
 def retrieve_comments(id, name):
@@ -58,7 +60,7 @@ def retrieve_comments(id, name):
 	q = models.Comment.query.all()
 	for i, line in enumerate(q):
 		if line.img_id == id and line.img_name == name:
-			comms.append({"user": line.user, "text": line.text, "score": line.score})
+			comms.append({"id": line.id, "user": line.user, "text": line.text, "score": line.score})
 
 	comms = [comm for comm in sorted(comms, key=lambda x: x["score"], reverse=True)]
 	return comms
@@ -68,7 +70,8 @@ def get_data():
 	imgs = retrieve_imgs()
 	for img in imgs:
 		comments = retrieve_comments(img["id"], img["name"])
-		data[img["id"]] = {"id": img["id"], "name": img["name"], "comments": comments}
+		data[img["id"]] = {"id": img["id"], "name": img["name"], "source": img["source"],
+						   "source_link": img["source_link"], "comments": comments}
 
 	return data
 
@@ -78,8 +81,8 @@ def record_comment(img_id, img_name, text, score=0, user="Unknown"):
 	db.session.commit()
 	return True
 
-def record_img(name, user):
-	img = models.Img(name, user)
+def record_img(name, user, source, source_link):
+	img = models.Img(name, user, source, source_link)
 	db.session.add(img)
 	db.session.commit()
 	return True

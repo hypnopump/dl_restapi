@@ -38,7 +38,7 @@ def info():
 	return render_template('post.html')
 
 @cross_origin()
-@app.route('/add_img/<name>/<user>/')
+@app.route('/add_image/<name>/<user>/')
 def add_img():
 	if record_img(name, user):
 		return "SUCCESS!"

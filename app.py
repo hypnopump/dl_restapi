@@ -34,12 +34,12 @@ def add_comment():
 	return "SUCCESS!"
 
 @app.route('/posts/<img_id>/')
-def info():
+def info(img_id):
 	return render_template('post.html')
 
 @cross_origin()
 @app.route('/add_image/<name>/<user>/<source>/<source_link>/')
-def add_img():
+def add_img(name, user, source, source_link):
 	source_link = "https://"+source_link
 	if record_img(name, user, source, source_link):
 		return "SUCCESS!"

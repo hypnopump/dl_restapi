@@ -29,8 +29,8 @@ def web():
 	return render_template('index.html', data=data)
 
 @app.route('/add_comment/', methods=['POST'])
-def add_img():
-	# if record_img(name, user):
+def add_comment():
+	# if record_comment(img_id, img_name, text, score=0, user="Unknown"):
 	return "SUCCESS!"
 
 @app.route('/posts/<img_id>/')

@@ -33,28 +33,19 @@ def add_img():
 	# if record_img(name, user):
 	return "SUCCESS!"
 
+@app.route('/posts/<img_id>/')
+def info():
+	return render_template('post.html')
+
 @cross_origin()
 @app.route('/add_img/<name>/<user>/')
 def add_img():
 	if record_img(name, user):
 		return "SUCCESS!"
 
-@app.route('/posts/<img_id>/')
-def info():
-	return render_template('post.html')
 
-# @app.route('/register/')
-# def register():
-# 	return render_template('register.html')
 
-# @app.route('/login/')
-# def login():
-# 	return render_template('login.html')
-
-# @app.route('/in/')
-# def in_():
-# 	return render_template('in.html')
-
+# HELPERS
 def retrieve_imgs():
 	imgs = []
 	q = models.Img.query.all()

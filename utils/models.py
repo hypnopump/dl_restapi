@@ -1,4 +1,4 @@
-from app import app, db
+from __init__ import app, db
 
 
 class Img(db.Model):

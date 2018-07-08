@@ -28,9 +28,9 @@ def web():
 	data = get_data()
 	return render_template('index.html', data=data)
 
-@app.route('/hello/')
-def hello():
-	return "Hello I'm working"
+@app.route('/demo/')
+def demo():
+	return render_template('safe_index.html')
 
 @app.route('/add_comment/', methods=['POST'])
 def add_comment():

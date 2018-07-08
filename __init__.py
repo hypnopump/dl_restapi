@@ -64,7 +64,7 @@ def retrieve_comments(ide, name):
 	q = models.Comment.query.filter_by(img_id=ide)
 	for i, line in enumerate(q):
 		if line.img_id == ide and line.img_name == name:
-			comms.append({"id": line.id, "user": line.user, "text": line.text, "score": line.score})
+			comms.append({"id": line.id, "user": line.username, "text": line.text, "score": line.score})
 
 	comms = [comm for comm in sorted(comms, key=lambda x: x["score"], reverse=True)]
 	return comms

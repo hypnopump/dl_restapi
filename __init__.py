@@ -59,11 +59,11 @@ def retrieve_imgs():
 					 "source": line.source, "source_link": line.source_link})
 	return imgs
 
-def retrieve_comments(id, name):
+def retrieve_comments(ide, name):
 	comms = []
-	q = models.Comment.query.all()
+	q = models.Comment.query.filter_by(img_id=ide)
 	for i, line in enumerate(q):
-		if line.img_id == id and line.img_name == name:
+		if line.img_id == ide and line.img_name == name:
 			comms.append({"id": line.id, "user": line.user, "text": line.text, "score": line.score})
 
 	comms = [comm for comm in sorted(comms, key=lambda x: x["score"], reverse=True)]
